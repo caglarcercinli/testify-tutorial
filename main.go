@@ -15,8 +15,8 @@ const (
 	dbHost     = "localhost"
 	dbPort     = 5432
 	dbUser     = "postgres"
-	dbPassword = "mysecretpassword"
-	dbName     = "postgres"
+	dbPassword = "postgres"
+	dbName     = "stocks"
 )
 
 func main() {
@@ -28,7 +28,7 @@ func main() {
 	}
 
 	createTable(db)
-	seedTable(db) // needs only be executed once
+	//seedTable(db) // needs only be executed once
 
 	pp := stocks.NewPriceProvider(db)
 	calculator := calculations.NewPriceIncreaseCalculator(pp)
@@ -44,7 +44,7 @@ func main() {
 func createTable(db *sql.DB) {
 	stmt, err := db.Prepare(`CREATE TABLE IF NOT EXISTS stockprices (
 		timestamp TIMESTAMPTZ PRIMARY KEY,
-		price DECIMAL NOT NULL
+		price INT NOT NULL
 	)`)
 
 	if err != nil {
